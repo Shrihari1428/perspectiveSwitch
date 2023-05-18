@@ -8,39 +8,31 @@ const HomePage = () => {
 
   const handleFileChange = (event) => {
     const files = event.target.files;
-    const fileArray = Array.from(files).slice(0, 4); // Limit to 4 files
-  
+    const fileArray = Array.from(files);
+
     if (fileArray.length === 4) {
       setSelectedFiles(fileArray);
     } else {
-      event.target.value = null; // Reset the file input
+      event.target.value = null;
       setSelectedFiles([]);
       alert('Please select exactly 4 video files.');
     }
-  };  
+  };
 
   const handleNext = () => {
-    if (selectedFiles.length === 4) {
-      const fileLocations = selectedFiles.map((file) => URL.createObjectURL(file));
-      navigate('/video', { state: { fileLocations } });
-    } else {
-      alert('Please select 4 video files.');
-    }
+    const fileLocations = selectedFiles.map((file) => URL.createObjectURL(file));
+    navigate('/video', { state: { fileLocations } });
   };
 
   return (
     <div className="file-picker-container">
-      {selectedFiles.length !== 4 && (
         <label className="file-picker-label">
           Select 4 Video Files:
           <input className="file-picker-input" type="file" accept="video/*" multiple onChange={handleFileChange} />
         </label>
-      )}
-      {selectedFiles.length !== 4 && (
         <button className="file-picker-button" onClick={() => { document.querySelector('.file-picker-input').click(); }}>
           Choose Files
         </button>
-      )}
       {selectedFiles.length === 4 && (
         <button className="file-picker-button" onClick={handleNext}>
           Next
@@ -48,8 +40,8 @@ const HomePage = () => {
       )}
     </div>
   );
-   
-     
+
+
 };
 
 export default HomePage;
